@@ -13,7 +13,5 @@ An app for buying home decor built using Expo, Expo Router, Tamagui, and Supabas
 
 ## Screenshots
 
-![App Screenshot](screenshots/1.png)
-![App Screenshot](screenshots/2.png)
-![App Screenshot](screenshots/3.png)
+![App Screenshot](screenshots/preview-1.png)
 
