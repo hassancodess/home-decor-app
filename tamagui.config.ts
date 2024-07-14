@@ -1,124 +1,91 @@
-import { createAnimations } from '@tamagui/animations-react-native';
-import { createInterFont } from '@tamagui/font-inter';
-import { createMedia } from '@tamagui/react-native-media-driver';
-import { shorthands } from '@tamagui/shorthands';
-import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, styled, SizableText, H1, YStack, Button as ButtonTamagui } from 'tamagui';
+import { config } from '@tamagui/config/v3';
+import { createFont, createMedia, createTamagui, createTokens } from 'tamagui';
 
-const animations = createAnimations({
-  bouncy: {
-    damping: 10,
-    mass: 0.9,
-    stiffness: 100,
-    type: 'spring',
+const generateNegativeSizes = (sizes: any) => {
+  console.log('sizes', sizes);
+  const negativeSizes: any = {};
+  Object.keys(sizes).forEach((key, index) => {
+    negativeSizes[`-${index + 1}`] = -sizes[key];
+  });
+  console.log('🚀 ~ generateNegativeSizes ~ negativeSizes:', negativeSizes);
+  return negativeSizes;
+};
+
+const poppinsFont = createFont({
+  family: 'Poppins',
+  size: config.fonts.body.size,
+  lineHeight: config.fonts.body.lineHeight,
+  weight: {
+    true: '400',
+    1: '300',
+    2: '400',
+    3: '500',
+    4: '600',
+    5: '700',
   },
-  lazy: {
-    damping: 20,
-    type: 'spring',
-    stiffness: 60,
-  },
-  quick: {
-    damping: 20,
-    mass: 1.2,
-    stiffness: 250,
-    type: 'spring',
+  letterSpacing: config.fonts.body.letterSpacing,
+  face: {
+    300: { normal: 'PoppinsLight' },
+    400: { normal: 'Poppins' },
+    500: { normal: 'PoppinsMedium' },
+    600: { normal: 'PoppinsSemiBold' },
+    700: { normal: 'PoppinsBold' },
   },
 });
 
-const headingFont = createInterFont();
-
-const bodyFont = createInterFont();
-
-export const Container = styled(YStack, {
-  flex: 1,
-  padding: 24,
-});
-
-export const Main = styled(YStack, {
-  flex: 1,
-  justifyContent: 'space-between',
-  maxWidth: 960,
-});
-
-export const Title = styled(H1, {
-  color: '#000',
-  size: '$12',
-});
-
-export const Subtitle = styled(SizableText, {
-  color: '#38434D',
-  size: '$9',
-});
-
-export const Button = styled(ButtonTamagui, {
-  backgroundColor: '#6366F1',
-  borderRadius: 28,
-  hoverStyle: {
-    backgroundColor: '#5a5fcf',
+const tamaguiConfig = createTamagui({
+  animations: config.animations,
+  tokens: config.tokens,
+  defaultFont: 'body',
+  fonts: {
+    body: poppinsFont,
+    heading: poppinsFont,
   },
-  pressStyle: {
-    backgroundColor: '#5a5fcf',
-  },
-  maxWidth: 500,
-
-  // Shaddows
-  shadowColor: '#000',
-  shadowOffset: {
-    height: 2,
-    width: 0,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-
-  // Button text
-  color: '#FFFFFF',
-  fontWeight: '600', // Is not passed down to the text. Probably a bug in Tamagui: https://github.com/tamagui/tamagui/issues/1156#issuecomment-1802594930
-  fontSize: 16,
-});
-
-const config = createTamagui({
-  light: {
-    color: {
-      background: 'gray',
-      text: 'black',
+  themes: {
+    light: {
+      bg: '#f2f2f2',
+      color: '#000000',
+      primary: '#F4B5A4',
+      accent: '#CC7861',
+      tertiary: '#DCBEB6',
+      beige: '#FAF0E6',
+      background: '#363130',
+      white: '#FFFFFF',
+      black: '#363130',
+    },
+    dark: {
+      bg: '#111',
+      color: '#FFFFFF',
+      primary: '#F4B5A4',
+      accent: '#CC7861',
+      tertiary: '#DCBEB6',
+      beige: '#FAF0E6',
+      background: '#363130',
+      white: '#FFFFFF',
+      black: '#363130',
     },
   },
-  defaultFont: 'body',
-  animations,
-  shouldAddPrefersColorThemes: true,
-  themeClassNameOnRoot: true,
-  shorthands,
-  fonts: {
-    body: bodyFont,
-    heading: headingFont,
+  defaultProps: {
+    Button: {
+      fontWeight: '$4',
+    },
   },
-  themes,
-  tokens,
   media: createMedia({
-    xs: { maxWidth: 660 },
-    sm: { maxWidth: 800 },
-    md: { maxWidth: 1020 },
-    lg: { maxWidth: 1280 },
-    xl: { maxWidth: 1420 },
-    xxl: { maxWidth: 1600 },
-    gtXs: { minWidth: 660 + 1 },
-    gtSm: { minWidth: 800 + 1 },
-    gtMd: { minWidth: 1020 + 1 },
-    gtLg: { minWidth: 1280 + 1 },
+    sm: { maxWidth: 860 },
+    gtSm: { minWidth: 860 + 1 },
     short: { maxHeight: 820 },
-    tall: { minHeight: 820 },
     hoverNone: { hover: 'none' },
     pointerCoarse: { pointer: 'coarse' },
   }),
+  disableSSR: true,
+  shouldAddPrefersColorThemes: false,
+  onlyAllowShorthands: false,
+  reactNative: true,
 });
 
-type AppConfig = typeof config;
-
-// Enable auto-completion of props shorthand (ex: jc="center") for Tamagui templates.
-// Docs: https://tamagui.dev/docs/core/configuration
+type Conf = typeof tamaguiConfig;
 
 declare module 'tamagui' {
-  interface TamaguiCustomConfig extends AppConfig {}
+  interface TamaguiCustomConfig extends Conf {}
 }
-
-export default config;
+export default tamaguiConfig;
