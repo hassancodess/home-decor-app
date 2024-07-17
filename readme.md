@@ -4,7 +4,7 @@ An app for buying home decor built using Expo, Expo Router, Tamagui, and Supabas
 
 ## Tech Stack
 
-**Client:** Expo, Expo Router, Tamagui,
+**Client:** Expo, Expo Router, Tamagui, React Hook Form
 
 **Server:** Supabase
 
