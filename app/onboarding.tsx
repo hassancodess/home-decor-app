@@ -1,20 +1,24 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, XStack, YStack, Text } from 'tamagui';
+import { XStack, YStack, Text } from 'tamagui';
 import { onboardingItems } from '~/data/onboardingItems';
 import { ChevronRight } from '@tamagui/lucide-icons';
 import OnboardingItem from '~/components/onboarding/OnboardingItem';
 import Carousel from '~/components/onboarding/Carousel';
 import { useRouter } from 'expo-router';
-// import PinarCarousel from 'pinar';
-// PinarCarousel.
+import { useAppContext } from '~/context/AppContext';
+import Button from '~/components/shared/Button';
+
 const Page = () => {
   const carouselRef = useRef<any>();
+  const { setIsFirstTime } = useAppContext();
+
   const router = useRouter();
   const [buttonTitle, setButtonTitle] = useState<string>('Next');
 
-  const navigateToLoginScreen = () => {
+  const navigateToLoginScreen = async () => {
+    await setIsFirstTime();
     router.replace('/login');
   };
 
@@ -58,14 +62,7 @@ const Page = () => {
           </Text>
           <ChevronRight size={'$1'} color={'$background'} />
         </XStack>
-        <Button
-          onPress={handleNextPress}
-          fontWeight={'$3'}
-          letterSpacing={'$2'}
-          size={'$5'}
-          backgroundColor={'$primary'}>
-          {buttonTitle}
-        </Button>
+        <Button onPress={handleNextPress}>{buttonTitle}</Button>
       </YStack>
     </SafeAreaView>
   );
