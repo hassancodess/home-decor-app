@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { Square } from 'tamagui';
 import { onboardingItems } from '~/data/onboardingItems';
-import PinarCarousel, { Props as PinarProps } from 'pinar';
+import PinarCarousel, { Props } from 'pinar';
 import OnboardingItem from './OnboardingItem';
 
 const renderActiveDot = () => {
@@ -22,16 +22,19 @@ const renderDot = () => {
     />
   );
 };
-
-const Carousel = React.forwardRef<any, any>(({ children }, ref) => {
+type ICarouselProps = {
+  onIndexChaged: Props['onIndexChanged'];
+  children: ReactElement[];
+};
+const Carousel = React.forwardRef((props: ICarouselProps, ref: React.Ref<PinarCarousel>) => {
   return (
     <PinarCarousel
-      // onIndexChanged={() => }
+      onIndexChanged={props.onIndexChaged}
       ref={ref}
       showsControls={false}
       renderActiveDot={renderActiveDot}
       renderDot={renderDot}>
-      {children}
+      {props.children}
     </PinarCarousel>
   );
 });
