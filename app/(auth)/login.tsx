@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from '@tamagui/lucide-icons';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable } from 'react-native';
@@ -45,12 +45,12 @@ const LoginPage = () => {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
       <SafeAreaView edges={['right', 'bottom', 'left']} style={{ flex: 1 }}>
         <YStack flex={1} paddingHorizontal="$4" justifyContent="space-between">
           <Group flex={1}>
             <YStack flex={1} gap="$8">
-              <Group tag="top">
+              <Group tag="top" gap="$1">
                 <Text variant="heading">Welcome</Text>
                 <Text variant="sub-heading">Please enter your details to proceed.</Text>
               </Group>
@@ -109,9 +109,11 @@ const LoginPage = () => {
 
               <Group gap="$4">
                 <Button onPress={handleSubmit(onSubmit)}>Login</Button>
-                <Text variant="titleSmall" centered>
-                  Forgot Password?
-                </Text>
+                <Link href={'/(auth)/forgot-password'}>
+                  <Text variant="titleSmall" centered>
+                    Forgot Password?
+                  </Text>
+                </Link>
               </Group>
             </YStack>
           </Group>
