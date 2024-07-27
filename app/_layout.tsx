@@ -12,6 +12,7 @@ import tamaguiConfig from '~/tamagui.config';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 import { AppProvider } from '~/context/AppContext';
+import { NoInternetToast } from '~/components/NoInternet';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,9 +33,14 @@ export default function Layout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <AppProvider>
           <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
-            <Stack.Screen name="(auth)" />
             <Stack.Screen name="onboarding" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(home)" />
+            <Stack.Screen name="orders" />
+            <Stack.Screen name="products" />
+            <Stack.Screen name="search" />
           </Stack>
+          <NoInternetToast />
         </AppProvider>
       </ThemeProvider>
     </TamaguiProvider>

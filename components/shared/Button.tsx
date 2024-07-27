@@ -6,5 +6,9 @@ const Button = styled(_Button, {
   letterSpacing: '$2',
   size: '$5',
   backgroundColor: '$primary',
+  borderEndEndRadius: '$4',
+  borderEndStartRadius: '$4',
+  borderStartEndRadius: "$4",
+  borderStartStartRadius: "$4"
 });
 export default Button;

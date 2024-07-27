@@ -42,7 +42,9 @@ const LoginPage = () => {
     router.navigate('/register');
   };
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    router.navigate('(home)');
+  };
 
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
@@ -68,7 +70,10 @@ const LoginPage = () => {
                             placeholder="example@gmail.com"
                             keyboardType="email-address"
                             value={value}
-                            onChangeText={onChange}
+                            onChangeText={(text) => {
+                              const trimmedText = text.trim();
+                              onChange(trimmedText);
+                            }}
                             onBlur={onBlur}
                           />
                         </InputContainer>
